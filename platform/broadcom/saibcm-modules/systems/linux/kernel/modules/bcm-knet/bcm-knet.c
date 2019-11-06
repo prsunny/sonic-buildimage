@@ -3644,6 +3644,7 @@ bkn_do_skb_rx(bkn_switch_info_t *sinfo, int chan, int budget)
                 /* check if vlan tag exists */
                 tpid = (uint16_t)((pkt[12] << 8) | pkt[13]);
                 if (packet_is_untagged(tpid)) {
+#if 0
                     if ((pktlen + 4) < rx_buffer_size) {
                         uint16_t vid = 0;
                          DBG_DUNE(("add vlan tag to untagged packets\n"));
@@ -3661,6 +3662,7 @@ bkn_do_skb_rx(bkn_switch_info_t *sinfo, int chan, int budget)
                          dcb[sinfo->dcb_wsize-1] |= (pktlen & SOC_DCB_KNET_COUNT_MASK);
                          bkn_dump_pkt(pkt, 32, XGS_DMA_RX_CHAN);
                     }
+#endif
                 }
             }
         }
@@ -5412,7 +5414,9 @@ bkn_tx(struct sk_buff *skb, struct net_device *dev)
         /* Prepare for DMA */
         desc->skb = skb;
         /* Add FCS bytes */
-        pktlen = pktlen + FCS_SZ;
+        if (!device_is_sand(sinfo)) {
+            pktlen = pktlen + FCS_SZ;
+        }
         desc->dma_size = pktlen;
         desc->skb_dma = DMA_MAP_SINGLE(sinfo->dma_dev,
                                        pktdata, desc->dma_size,
