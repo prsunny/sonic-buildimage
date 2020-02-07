@@ -20,6 +20,7 @@ dport_map_enable
 dport_map_indexed
 dport_map_port
 dpp_clock_ratio
+dpp_db_path
 dpr_clock_frequency
 ext_sram_freq
 ext_tcam_freq

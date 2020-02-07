@@ -715,6 +715,15 @@ _ether_interrupt(bde_ctrl_t *ctrl)
 #endif
 }
 
+/* SAI_FIXUP */
+#ifdef BCM_DNX_SUPPORT
+/* SKU Support*/
+/* Returns TRUE for all devices with DEV_ID from 0x8690 to 0x869F*/
+#define SOC_IS_JERICHO_2_TYPE(dev_type) (((dev_type) & BCM_JR2_DEVID_MASK) == (BCM88690_DEVICE_ID & BCM_JR2_DEVID_MASK))
+#else
+#define SOC_IS_JERICHO_2_TYPE(dev_type) (0)
+#endif /* BCM_DNX_SUPPORT */
+/* end of  SAI_FIXUP */
 
 static struct _intr_mode_s {
     isr_f isr;

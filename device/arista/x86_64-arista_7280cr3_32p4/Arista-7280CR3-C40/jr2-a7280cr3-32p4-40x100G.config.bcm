@@ -1,3 +1,4 @@
+dpp_db_path=/usr/share/bcm/db
 soc_family.BCM8869X=BCM8869X
 
 custom_feature_ucode_path=u_code_db2pem.txt
